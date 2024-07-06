@@ -107,13 +107,13 @@ const CountryList = () => {
 
             <div
               className="ag-theme-quartz-dark"
-              style={{ height: "80vh", paddingTop: "15px" }}
+              style={{ height: "75vh", paddingTop: "15px" }}
             >
               <AgGridReact
                 rowData={countries}
                 columnDefs={columnDefs}
                 pagination={true}
-                paginationPageSize={20}
+                paginationPageSize={15}
                 quickFilterText={search}
               />
             </div>
