@@ -3,7 +3,7 @@ import axios from "axios";
 import useApi from "./useApi";
 
 jest.mock("axios", () => ({
-  get: jest.fn(() => Promise.resolve({ data: "ocked data" })),
+  get: jest.fn(() => Promise.resolve({ data: "mocked data" })),
 }));
 
 describe("useApi", () => {
@@ -14,17 +14,7 @@ describe("useApi", () => {
     await act(async () => {
       await waitFor(() => result.current.data !== null);
     });
-    expect(result.current).toEqual({ data: "ocked data", error: null });
-  });
-
-  it("fetches data on mount", async () => {
-    const { result } = renderHook(() =>
-      useApi<string>("https://restcountries.com/v3.1/all")
-    );
-    await act(async () => {
-      await waitFor(() => result.current.data !== null);
-    });
-    expect(result.current).toEqual({ data: "ocked data", error: null });
+    expect(result.current).toEqual({ data: "mocked data", error: null });
   });
 
   it("handles errors", async () => {
@@ -32,7 +22,7 @@ describe("useApi", () => {
       Promise.reject(new Error("Network error"))
     );
     const { result } = renderHook(() =>
-      useApi<string>("https://restcountries.com/v3.1/all")
+      useApi<string>("https://restcountries.com/v3.1/name/error")
     );
     await act(async () => {
       await waitFor(() => result.current.error !== null);
