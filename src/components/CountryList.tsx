@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import useApi from "../hooks/useApi";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
@@ -13,23 +12,13 @@ interface Country {
   population: number;
 }
 
-interface CountryData {
-  flags: { png: string };
-  name: { common: string };
-  capital: string[];
-  population: number;
-}
-
-const CountryList = () => {
+const CountryList = (props) => {
   const [countries, setCountries] = useState<Country[]>([]);
   const [search, setSearch] = useState("");
-  const { data, error } = useApi<CountryData[]>(
-    "https://restcountries.com/v3.1/all"
-  );
 
   useEffect(() => {
-    if (data) {
-      const rowData = data.map((country) => {
+    if (props.data) {
+      const rowData = props.data.map((country) => {
         return {
           flag: country.flags.png ? country.flags.png : "",
           name: country.name.common ? country.name.common : "",
@@ -39,10 +28,10 @@ const CountryList = () => {
       });
       setCountries(rowData);
       console.log(rowData);
-    } else if (error) {
-      alert(error);
+    } else if (props.error) {
+      alert(props.error);
     }
-  }, [data, error]);
+  }, [props.data, props.error]);
 
   const columnDefs: ColDef<Country>[] = [
     {
